@@ -1,4 +1,3 @@
 require("kindalus.remap")
 require("kindalus.packer")
-
-print("Hello master kindlaus")
+require("kindalus.set")
