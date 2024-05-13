@@ -15,7 +15,7 @@ vim.opt.wrap = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-vim.opt.termguicolors = false
+vim.opt.termguicolors = true
 
 
 vim.opt.colorcolumn = "80"

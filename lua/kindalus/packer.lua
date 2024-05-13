@@ -38,11 +38,13 @@ return require('packer').startup(function(use)
       }
    }
 
+
    use "mbbill/undotree"
    use "tpope/vim-fugitive"
 
    use {
       "rcarriga/nvim-dap-ui",
+
       requires = {
          {"mfussenegger/nvim-dap"},
          {"nvim-neotest/nvim-nio"}
@@ -55,6 +57,12 @@ return require('packer').startup(function(use)
    require("dapui").setup()
    require("dap-go").setup()
 
-   use { 'projekt0n/github-nvim-theme' }
+   -- colorschemes
+   use "projekt0n/github-nvim-theme"
+   use "shaunsingh/nord.nvim"
+   use { "rose-pine/neovim", as = "rose-pine" }
+   use "olimorris/onedarkpro.nvim"
+
+
 
 end)
