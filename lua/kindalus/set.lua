@@ -19,4 +19,3 @@ vim.opt.termguicolors = false
 
 
 vim.opt.colorcolumn = "80"
-

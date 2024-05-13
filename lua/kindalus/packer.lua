@@ -42,11 +42,11 @@ return require('packer').startup(function(use)
    use "tpope/vim-fugitive"
 
    use {
-	   "rcarriga/nvim-dap-ui",
-	   requires = {
-		   {"mfussenegger/nvim-dap"},
-		   {"nvim-neotest/nvim-nio"}
-	   } 
+      "rcarriga/nvim-dap-ui",
+      requires = {
+         {"mfussenegger/nvim-dap"},
+         {"nvim-neotest/nvim-nio"}
+      }
    }
 
    use "theHamsta/nvim-dap-virtual-text"
@@ -55,14 +55,6 @@ return require('packer').startup(function(use)
    require("dapui").setup()
    require("dap-go").setup()
 
+   use { 'projekt0n/github-nvim-theme' }
 
-
-   --use {
-      --	'rose-pine/neovim',
-      --	as = 'rose-pine',
-      --	config = function()
-         --		vim.cmd('colorscheme rose-pine')
-         --	end
-         --}
-
-      end)
+end)
