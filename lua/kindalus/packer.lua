@@ -38,34 +38,44 @@ return require('packer').startup(function(use)
       }
    }
 
-
+   -- Debugging
    use "mbbill/undotree"
    use "tpope/vim-fugitive"
-
    use {
-      "rcarriga/nvim-dap-ui",
+        "rcarriga/nvim-dap-ui",
 
-      requires = {
-         {"mfussenegger/nvim-dap"},
-         {"nvim-neotest/nvim-nio"}
-      }
+        requires = {
+             {"mfussenegger/nvim-dap"},
+             {"nvim-neotest/nvim-nio"}
+        }
    }
-
    use "theHamsta/nvim-dap-virtual-text"
-   use 'leoluz/nvim-dap-go' -- Install the plugin with Packer
 
-   -- colorschemes
+   -- Colorschemes
    use "projekt0n/github-nvim-theme"
    use "shaunsingh/nord.nvim"
    use { "rose-pine/neovim", as = "rose-pine" }
    use "olimorris/onedarkpro.nvim"
 
-   use {
-      'VonHeikemen/fine-cmdline.nvim',
-      requires = {
-         {'MunifTanjim/nui.nvim'}
-      }
-   }
-   --vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
 
+   -- Goodies
+   use  {
+        "folke/noice.nvim",
+        event = "VimEnter",
+        opts = {
+             -- add any options here
+        },
+        dependencies = {
+             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+             "MunifTanjim/nui.nvim",
+             -- OPTIONAL:
+             --   `nvim-notify` is only needed, if you want to use the notification view.
+             --   If not available, we use `mini` as the fallback
+             "rcarriga/nvim-notify",
+        }
+   }
+
+   -- Programming in go
+   use "ray-x/go.nvim"
+   use "leoluz/nvim-dap-go"
 end)
