@@ -63,6 +63,12 @@ return require('packer').startup(function(use)
    use { "rose-pine/neovim", as = "rose-pine" }
    use "olimorris/onedarkpro.nvim"
 
-
+   use {
+      'VonHeikemen/fine-cmdline.nvim',
+      requires = {
+         {'MunifTanjim/nui.nvim'}
+      }
+   }
+   --vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
 
 end)
