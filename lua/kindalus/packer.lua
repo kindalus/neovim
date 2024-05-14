@@ -54,9 +54,6 @@ return require('packer').startup(function(use)
    use "theHamsta/nvim-dap-virtual-text"
    use 'leoluz/nvim-dap-go' -- Install the plugin with Packer
 
-   require("dapui").setup()
-   require("dap-go").setup()
-
    -- colorschemes
    use "projekt0n/github-nvim-theme"
    use "shaunsingh/nord.nvim"
