@@ -18,7 +18,7 @@ return require('packer').startup(function(use)
       'nvim-treesitter/nvim-treesitter',
       -- Note: :TSUpdate will cause Packer to fail upon the first installation. It will run correctly when updating
       -- Comment this line on installation and the uncomment it
-      run = ':TSUpdate'
+      -- run = ':TSUpdate'
    }
 
    use "theprimeagen/harpoon"
