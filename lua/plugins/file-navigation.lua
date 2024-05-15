@@ -3,10 +3,10 @@ return {
           "nvim-telescope/telescope.nvim",
           dependencies = {
                "nvim-lua/plenary.nvim"
-          }, 
-          opts= {
+          },
+          opts = {
 
-               file_ignore_patters = {"node_modules"}
+               file_ignore_patters = { "node_modules" }
           },
           config = function()
                local builtin = require('telescope.builtin')
@@ -17,9 +17,8 @@ return {
                --vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
                vim.keymap.set('n', '<leader>fg', builtin.git_files, {})
                vim.keymap.set('n', '<leader>fw', function()
-                    builtin.grep_string({search = vim.fn.input("Grep > ") });
+                    builtin.grep_string({ search = vim.fn.input("Grep > ") });
                end)
-
           end
 
      },
@@ -41,8 +40,7 @@ return {
                     -- Toggle previous & next buffers stored within Harpoon list
                     vim.keymap.set("n", "<leader>k", function() harpoon:list():prev() end)
                     vim.keymap.set("n", "<leader>j", function() harpoon:list():next() end)
-
-               end 
+               end
 
           }
      }

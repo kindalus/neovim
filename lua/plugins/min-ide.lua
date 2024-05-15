@@ -1,12 +1,20 @@
+-- Create a bottom empty  area
+vim.keymap.set("n", "<leader>wc", function()
+     vim.cmd("botright new")
+     vim.cmd("resize 8")
+     vim.cmd("terminal")
+
+     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("i", true, false, true), "n", false)
+end)
+
 return {
 
      -- undo
      {
           "mbbill/undotree",
           config = function()
-
                vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-          end  
+          end
      },
 
 
@@ -17,7 +25,7 @@ return {
           -- Comment this line on installation and the uncomment it
           -- run = ':TSUpdate'
           config = function()
-               require'nvim-treesitter.configs'.setup {
+               require 'nvim-treesitter.configs'.setup({
                     -- A list of parser names, or "all" (the five listed parsers should always be installed)
                     ensure_installed = { "lua", "vim", "vimdoc", "javascript", "typescript", "bash", "html", "css" },
 
@@ -36,7 +44,7 @@ return {
                          enable = true,
                          additional_vim_regex_highlighting = false,
                     },
-               }
+               })
           end
      },
 
@@ -47,25 +55,23 @@ return {
           branch = 'v3.x',
           dependencies = {
                --- Uncomment the two plugins below if you want to manage the language servers from neovim
-               {'williamboman/mason.nvim'},
-               {'williamboman/mason-lspconfig.nvim'},
+               { 'williamboman/mason.nvim' },
+               { 'williamboman/mason-lspconfig.nvim' },
 
-               {'neovim/nvim-lspconfig'},
-               {'hrsh7th/nvim-cmp'},
-               {'hrsh7th/cmp-nvim-lsp'},
-               {'L3MON4D3/LuaSnip'},
+               { 'neovim/nvim-lspconfig' },
+               { 'hrsh7th/nvim-cmp' },
+               { 'hrsh7th/cmp-nvim-lsp' },
+               { 'L3MON4D3/LuaSnip' },
           },
 
-          config = function() 
-
-               local cmp =  require('cmp')
-               local zero =  require('lsp-zero')
+          config = function()
+               local zero = require('lsp-zero')
                local mason = require("mason")
                local lspconfig = require("lspconfig")
                local masonconfig = require("mason-lspconfig")
 
                zero.on_attach(function(client, bufnr)
-                    zero.default_keymaps({buffer = bufnr})
+                    zero.default_keymaps({ buffer = bufnr })
                end)
 
                mason.setup({})
@@ -93,16 +99,16 @@ return {
                          settings = {
                               Lua = {
                                    runtime = {
-                                        version = 'LuaJIT',  -- Neovim uses LuaJIT
+                                        version = 'LuaJIT', -- Neovim uses LuaJIT
                                    },
                                    diagnostics = {
-                                        globals = {'vim'},  -- Recognize 'vim' as a global variable
+                                        globals = { 'vim' }, -- Recognize 'vim' as a global variable
                                    },
                                    workspace = {
                                         library = vim.api.nvim_get_runtime_file("", true),
                                    },
                                    telemetry = {
-                                        enable = false,  -- Disable telemetry
+                                        enable = false, -- Disable telemetry
                                    },
                               },
                          },
@@ -111,10 +117,12 @@ return {
                     print("lua-language-server not installed, skipping setup")
                end
 
+               local cmp = require('cmp')
                cmp.setup({
                     mapping = cmp.mapping.preset.insert({
                          -- confirm completion
-                         ["<CR>"] = cmp.mapping.confirm({select = true}),
+                         ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                         ["<Tab>"] = cmp.mapping.confirm({ select = true }),
                          ["<C-Space>"] = cmp.mapping.complete(),
 
                     }),
@@ -126,6 +134,9 @@ return {
                })
 
 
+               vim.keymap.set("n", "<leader>F", function()
+                    vim.cmd("LspZeroFormat")
+               end)
           end
      },
 
@@ -138,9 +149,12 @@ return {
                -- or leave it empty to use the default settings
                -- refer to the configuration section below
           },
+          config = function()
+               vim.keymap.set("n", "<leader>.", function() require("trouble").toggle("quickfix") end)
+          end
      },
 
-     -- git 
+     -- git
      {
           "tpope/vim-fugitive",
           config = function()
@@ -155,33 +169,31 @@ return {
           "rcarriga/nvim-dap-ui",
 
           dependencies = {
-               {"mfussenegger/nvim-dap"},
-               {"nvim-neotest/nvim-nio"}
+               { "mfussenegger/nvim-dap" },
+               { "nvim-neotest/nvim-nio" }
           },
 
-          config = function() 
-               local dapui = require("dapui") 
+          config = function()
+               local dapui = require("dapui")
                local dap = require("dap")
 
                dapui.setup()
 
-
-
-               dap.listeners.after.event_initialized["dapui_config"]=function()
+               dap.listeners.after.event_initialized["dapui_config"] = function()
                     dapui.open()
                end
 
-               dap.listeners.before.event_terminated["dapui_config"]=function()
+               dap.listeners.before.event_terminated["dapui_config"] = function()
                     dapui.close()
                end
 
-               dap.listeners.before.event_exited["dapui_config"]=function()
+               dap.listeners.before.event_exited["dapui_config"] = function()
                     dapui.close()
                end
 
 
-               vim.fn.sign_define('DapBreakpoint',{ text ="\u{25CF}", texthl ='', linehl ='', numhl =''})
-               vim.fn.sign_define('DapStopped',{ text ="\u{25B6}", texthl ='', linehl ='', numhl =''})
+               vim.fn.sign_define('DapBreakpoint', { text = "\u{25CF}", texthl = '', linehl = '', numhl = '' })
+               vim.fn.sign_define('DapStopped', { text = "\u{25B6}", texthl = '', linehl = '', numhl = '' })
 
                vim.keymap.set('n', '<F5>', dap.continue)
                vim.keymap.set('n', '<F10>', dap.step_over)
@@ -189,8 +201,7 @@ return {
                vim.keymap.set('n', '<F12>', dap.step_out)
                vim.keymap.set('n', '<leader>bb', dap.toggle_breakpoint)
                vim.keymap.set('n', '<leader>dd', dapui.toggle)
-
-          end 
+          end
      },
      "theHamsta/nvim-dap-virtual-text"
 
