@@ -1,5 +1,5 @@
 vim.g.mapleader = "\\"
-vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>ee", vim.cmd.Ex)
 
 -- Move text
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
