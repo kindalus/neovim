@@ -14,4 +14,11 @@ vim.keymap.set("n", "<leader>wl", "<C-w>l")
 vim.keymap.set("n", "<leader>wj", "<C-w>j")
 vim.keymap.set("n", "<leader>wk", "<C-w>k")
 
+-- Create a bottom empty  area
+vim.keymap.set("n", "<leader>wb", function() 
+    vim.cmd("botright new")
+    vim.cmd("resize 8")
+    -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>k", true, false, true), "n", false)
+
+end)
 

@@ -65,7 +65,7 @@ return {
                local masonconfig = require("mason-lspconfig")
 
                zero.on_attach(function(client, bufnr)
-                    lsp_zero.default_keymaps({buffer = bufnr})
+                    zero.default_keymaps({buffer = bufnr})
                end)
 
                mason.setup({})
@@ -80,6 +80,36 @@ return {
                     }
                })
 
+
+               -- Function to check if an executable exists in the system's PATH
+               local function executable_exists(exe)
+                    local path = vim.fn.system('command -v ' .. exe)
+                    return path ~= ""
+               end
+
+               -- Check if 'lua-language-server' is installed
+               if executable_exists('lua-language-server') then
+                    lspconfig.lua_ls.setup {
+                         settings = {
+                              Lua = {
+                                   runtime = {
+                                        version = 'LuaJIT',  -- Neovim uses LuaJIT
+                                   },
+                                   diagnostics = {
+                                        globals = {'vim'},  -- Recognize 'vim' as a global variable
+                                   },
+                                   workspace = {
+                                        library = vim.api.nvim_get_runtime_file("", true),
+                                   },
+                                   telemetry = {
+                                        enable = false,  -- Disable telemetry
+                                   },
+                              },
+                         },
+                    }
+               else
+                    print("lua-language-server not installed, skipping setup")
+               end
 
                cmp.setup({
                     mapping = cmp.mapping.preset.insert({
