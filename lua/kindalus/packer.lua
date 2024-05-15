@@ -65,7 +65,7 @@ return require('packer').startup(function(use)
         opts = {
              -- add any options here
         },
-        dependencies = {
+        requires = {
              -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
              "MunifTanjim/nui.nvim",
              -- OPTIONAL:
