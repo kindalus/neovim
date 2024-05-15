@@ -75,7 +75,21 @@ return require('packer').startup(function(use)
         }
    }
 
+
+   use {
+        "folke/trouble.nvim",
+        requires = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+             -- your configuration comes here
+             -- or leave it empty to use the default settings
+             -- refer to the configuration section below
+        },
+   }
+
    -- Programming in go
    use "ray-x/go.nvim"
+   use 'ray-x/guihua.lua' -- recommended if need floating window support
    use "leoluz/nvim-dap-go"
+
+
 end)
