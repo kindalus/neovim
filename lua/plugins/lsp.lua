@@ -16,7 +16,12 @@ return {
                     lsp_zero.default_keymaps({ buffer = bufnr })
 
                     vim.keymap.set({ "n", "i", "x" }, "<C-.>", "<cmd>lua vim.lsp.buf.code_action()<CR>",
-                         { buffer = bufnr })
+                         { buffer = bufnr, noremap = true, silent = true })
+
+                    vim.keymap.set("v", "<C-.>", "<cmd>lua vim.lsp.buf.code_action()<CR>",
+                         { buffer = bufnr, noremap = true, silent = true })
+
+
                     vim.keymap.set("n", "<leader>F", "<cmd>LspZeroFormat<cr>")
                end)
 
@@ -66,7 +71,31 @@ return {
                     },
                     handlers = {
                          function(server_name)
-                              require('lspconfig')[server_name].setup({})
+                              if server_name == "lua_ls" then
+                                   require 'lspconfig'.lua_ls.setup {
+                                        on_init = function(client)
+                                             local path = client.workspace_folders[1].name
+                                             if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+                                                  return
+                                             end
+
+                                             client.config.settings.Lua = vim.tbl_deep_extend('force',
+                                                  client.config.settings.Lua, {
+                                                       workspace = {
+                                                            checkThirdParty = false,
+                                                            library = {
+                                                                 vim.env.VIMRUNTIME
+                                                            }
+                                                       }
+                                                  })
+                                        end,
+                                        settings = {
+                                             Lua = {}
+                                        }
+                                   }
+                              else
+                                   require('lspconfig')[server_name].setup({})
+                              end
                          end,
                     },
                })

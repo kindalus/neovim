@@ -1,7 +1,5 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader  = ""
-
-
+vim.g.maplocalleader  = " "
 
 vim.keymap.set('n', '<C-Tab>', '<C-^>', {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>ee", vim.cmd.Ex)
