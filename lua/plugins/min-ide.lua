@@ -7,7 +7,37 @@ vim.keymap.set("n", "<leader>wc", function()
      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("i", true, false, true), "n", false)
 end)
 
+
+
+
 return {
+     -- "gc" to comment visual regions/lines
+     { "numToStr/Comment.nvim", opts = {} },
+
+     -- Useful plugin to show you pending keybinds.
+     {
+          'folke/which-key.nvim',
+          event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+          config = function() -- This is the function that runs, AFTER loading
+               require('which-key').setup()
+
+               -- Document existing key chains
+               require('which-key').register {
+                    ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
+                    ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+                    ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+                    ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+                    ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+                    ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
+                    ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+               }
+               -- visual mode
+               require('which-key').register({
+                    ['<leader>h'] = { 'Git [H]unk' },
+               }, { mode = 'v' })
+          end,
+     },
+
 
      -- undo
      {
@@ -48,97 +78,6 @@ return {
           end
      },
 
-
-     -- lsp
-     {
-          'VonHeikemen/lsp-zero.nvim',
-          branch = 'v3.x',
-          dependencies = {
-               --- Uncomment the two plugins below if you want to manage the language servers from neovim
-               { 'williamboman/mason.nvim' },
-               { 'williamboman/mason-lspconfig.nvim' },
-
-               { 'neovim/nvim-lspconfig' },
-               { 'hrsh7th/nvim-cmp' },
-               { 'hrsh7th/cmp-nvim-lsp' },
-               { 'L3MON4D3/LuaSnip' },
-          },
-
-          config = function()
-               local zero = require('lsp-zero')
-               local mason = require("mason")
-               local lspconfig = require("lspconfig")
-               local masonconfig = require("mason-lspconfig")
-
-               zero.on_attach(function(client, bufnr)
-                    zero.default_keymaps({ buffer = bufnr })
-               end)
-
-               mason.setup({})
-
-               masonconfig.setup({
-                    -- Replace the language servers listed here
-                    -- with the ones you want to install
-                    handlers = {
-                         function(server_name)
-                              lspconfig[server_name].setup({})
-                         end,
-                    }
-               })
-
-
-               -- Function to check if an executable exists in the system's PATH
-               local function executable_exists(exe)
-                    local path = vim.fn.system('command -v ' .. exe)
-                    return path ~= ""
-               end
-
-               -- Check if 'lua-language-server' is installed
-               if executable_exists('lua-language-server') then
-                    lspconfig.lua_ls.setup {
-                         settings = {
-                              Lua = {
-                                   runtime = {
-                                        version = 'LuaJIT', -- Neovim uses LuaJIT
-                                   },
-                                   diagnostics = {
-                                        globals = { 'vim' }, -- Recognize 'vim' as a global variable
-                                   },
-                                   workspace = {
-                                        library = vim.api.nvim_get_runtime_file("", true),
-                                   },
-                                   telemetry = {
-                                        enable = false, -- Disable telemetry
-                                   },
-                              },
-                         },
-                    }
-               else
-                    print("lua-language-server not installed, skipping setup")
-               end
-
-               local cmp = require('cmp')
-               cmp.setup({
-                    mapping = cmp.mapping.preset.insert({
-                         -- confirm completion
-                         ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                         ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-                         ["<C-Space>"] = cmp.mapping.complete(),
-
-                    }),
-
-                    window = {
-                         completion = cmp.config.window.bordered(),
-                         documentation = cmp.config.window.bordered(),
-                    }
-               })
-
-
-               vim.keymap.set("n", "<leader>F", function()
-                    vim.cmd("LspZeroFormat")
-               end)
-          end
-     },
 
      -- linter
      {
