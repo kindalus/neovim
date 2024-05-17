@@ -123,7 +123,7 @@ return {
 
                               lspconfig.tsserver.setup {
                                    root_dir = lspconfig.util.root_pattern("package.json"),
-                                   single_file_supported = false,
+                                   single_file_support = false
                               }
                          end,
 
