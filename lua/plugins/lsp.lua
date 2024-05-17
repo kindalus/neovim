@@ -11,10 +11,10 @@ return {
                     -- to learn the available actions
                     lsp_zero.default_keymaps({ buffer = bufnr })
 
-                    vim.keymap.set({ "n", "i", "x" }, "<C-.>", "<cmd>lua vim.lsp.buf.code_action()<CR>",
+                    vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action,
                          { buffer = bufnr, noremap = true, silent = true, desc = "Code Action" })
 
-                    vim.keymap.set("v", "<C-.>", "<cmd>lua vim.lsp.buf.code_action()<CR>",
+                    vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action,
                          { buffer = bufnr, noremap = true, silent = true, desc = "Code Action" })
 
                     vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions,

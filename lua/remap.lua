@@ -2,7 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader  = " "
 
 vim.keymap.set('n', '<C-Tab>', '<C-^>', {noremap = true, silent = true})
-vim.keymap.set("n", "<leader>ee", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>te", vim.cmd.Ex, {desc = "[T]oggle [E]xplorer"})
 
 -- Move text
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
